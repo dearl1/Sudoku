@@ -38,10 +38,10 @@ main=[
 
 
 # outputting each row of main
-print("\n\n Outputting each row of main ...\n")
-for row in main:
-    print(row)
-    print()
+##print("\n\n Outputting each row of main ...\n")
+##for row in main:
+##    print(row)
+##    print()
 
 
 # make main be the inverse of PuzzleIn
@@ -54,47 +54,46 @@ for row in range(9):
 
 
 # outputting each row of main
-print("\n\n Outputting each row of main ...\n")
-for row in main:
-    print(row)
-    print()
+##print("\n\n Outputting each row of main ...\n")
+##for row in main:
+##    print(row)
+##    print()
 
 
-'''
-
+# this function goes through the 81 elements in main and checks if the length of each of the 81 places is 8 (that is, number exists)
+    # and outputs the missing number (that is, the solution for that space)
 def not_to_actual():
     print('\n\nnot_to_actual:\n')
-    #This routes through main, checks if length is 8 (that is, number exists), and outputs missing number (that is, the actual number)
-    get1=0
-    get2=0
-    record=[]
+
+    # initialise variable which holds how many numbers we have solved
     length=0
-    for i in range(9):
-        for i in range(9):
-            if len((main[get1])[get2])==8:
-                count=1
-                for i in range(9):
-                    if count not in (main[get1])[get2]:
-                        record.append(count)
-                    count+=1
+    
+    for row in range(9):
+        # initiliase an array which will stay one dimensional and is used per row
+        record=[]
+        for column in range(9):
+            
+            if len((main[row])[column]) == 8: # if this is true that means we have found a solution for this space
+                for number in range(1, 10):
+                    if number not in (main[row])[column]:
+                        record.append(number)
+                        
             else:
-                record.append(0)
-            get2+=1
+                record.append(0) # record will have a 0 if the solution for one of the 81 spaces has not been found yet
+            
         print(record)
+
+        # how many numbers have we solved?
         for i in record:
             if i!=0:
                 length+=1
-        record=[]
-        get2=0
-        get1+=1
-    print('\nLength of not_to_actual:',length)
+
+    print('\nHow many of the 81 spaces have we found a number for:', length)
 
 
-
-
-
+# this function accepts an argument called place
+    # it outputs 0, 3 or 6 depending on where in this segmentation 'place' is
 def get_coords(place):
-    use=0
     if place>=0 and place<=2:
         use=0
     elif place>=3 and place<=5:
@@ -107,199 +106,160 @@ def get_coords(place):
     return use
 
 
+# Calling not_to_actual function
+##not_to_actual()
 
 
-
-#Printing not_to_actual and the length of it
-not_to_actual()
-
-#Printing main and the length of it
-print('\n\nmain:\n')
-for i in main:
-    print(i,'\n')
-
-count=0
-for i in main:
-    for j in i:
-        count+=len(j)
-
-print('\nLength of main:',count)
-
+###Printing main and the length of it
+##print('\n\nmain:\n')
+##for i in main:
+##    print(i,'\n')
+##
+##count=0
+##for i in main:
+##    for j in i:
+##        count+=len(j)
+##
+##print('\nLength of main:',count)
 
 
 complete1=0
 complete2=1
-#Routing through the 9 by 9 sudoku
-while complete1 != complete2:
+# main code
+while complete1 != complete2: # if the number of solutions doesn't increase then the code stops
     complete1=complete2
 
     print('\n*******************************************************************************\n')
-    get1=0
-    get2=0
-    for i in range(9):
-        for i in range(9):
-    ##        not_to_actual()
-            if len((main[get1])[get2])==8:
-                count=1
-                for i in range(9):
-                    if count not in (main[get1])[get2]:
-                        #print(count)
-                        #At this stage, the actual number has just been outputted and we know the coordinates too
 
-                        #This is the column update
-                        use1=0
-                        use2=get2
-                        variable=count
-                        for i in range(9):
-                            if len((main[use1])[use2])<8 and variable not in (main[use1])[use2]:
-                                (main[use1])[use2].append(variable)
-                            use1+=1
-                        #End updating the column
+    # look through all 81 spaces of 'main'
+        # if one of them has 8 numbers which can't exist in that space then the odd one out is the solution for that space and is the variable 'number'
+        # this 'number' needs to be put in the row, column and '3 by 3 box' that the space is in because if 'number' is the solution to the current place it can't
+        # be the solution to the nearby spaces.
+    for row in range(9):
+        for column in range(9):
 
-                        #This is the row update
-                        use1=get1
-                        use2=0
-                        variable=count
-                        for i in range(9):
-                            if len((main[use1])[use2])<8 and variable not in (main[use1])[use2]:
-                                (main[use1])[use2].append(variable)
-                            use2+=1      
-                        #End updating the row
+            if len((main[row])[column])==8: # if this is true then we have found the solution for this space
+                for number in range(1, 10):
+                    if number not in (main[get1])[get2]: # if this is true then 'number' is the solution for this space
 
-                        #This is the 3 by 3 update
-                        use1=get_coords(get1)
-                        store=get_coords(get2)
-                        use2=store
-                        variable=count
-
-                        for i in range(3):
-                            for i in range(3):
-                                if len((main[use1])[use2])<8 and variable not in (main[use1])[use2]:
-                                    (main[use1])[use2].append(variable)
-                                use2+=1
-                            use2=store
-                            use1+=1
-                        
-                        #End updating the 3 by 3
-                    count+=1
-            get2+=1
-        get2=0
-        get1+=1
+                        # Make all the spaces in the same column as the current location have 'number' added to them (if 'number' doesn't already exist)
+                        for sub_row in range(9): # sub_row will go from 0 through 8
+                            if len(main[sub_row][column]) < 8 and number not in main[sub_row][column]:
+                                main[sub_row][column].append(number)
+                        # sub_row and sub_column are not needed anymore
 
 
-    #This is the: rows - not in times 8, then add all but that one as not numbers
-    place1=0
-
-    for i in range(9):
-        check=1
-        for i in range(9):
-            record=0
-            store=0
-            place2=0
-            for i in range(9):
-                if check in (main[place1])[place2]:
-                    record+=1
-                else:
-                    store=place2
-                place2+=1
+                        # Make all the spaces in the same row as the current location have 'number' added to them (if 'number' doesn't already exist)
+                        for sub_column in range(9): # sub_column will go from 0 through 8
+                            if len(main[row][sub_column]) < 8 and number not in main[row][sub_column]:
+                                main[row][sub_column].append(number)
+                        # sub_row and sub_column are not needed anymore
 
 
-            count=1
-            if record==8:
-                for i in range(9):
-                    if count not in (main[place1])[store] and count != check:
-                        (main[place1])[store].append(count)
-                    count+=1
-                    
-            check+=1
-        place1+=1
-    #End the rows not in times 8
+                        # Make all the spaces in the same 3 by 3 box as the current location have 'number' added to them (if 'number' doesn't already exist)
+                        row_start = get_coords(row)
+                        column_start = get_coords(column)
+
+                        for sub_row in range(row_start, row_start + 3):
+                            for sub_column in range(column_start, column_start + 3):
+                                if len(main[sub_row][sub_column]) < 8 and number not in main[sub_row][sub_column]:
+                                    main[sub_row][sub_column].append(number)
+                        # sub_row and sub_column are not needed anymore
+                                    
+
+                        break # break out of the 'for number in range(1, 10)' bcos we have found what the solution for this space is
+    # row, column and number are note needed anymore
 
 
-    #This is the: columns - not in times 8, then add all but that one as not numbers
-    place2=0
+    # if a row, column or '3 by 3 box' has 8 spaces which all "can't have a certain number" then the space which is the odd one out is where the number needs to go
 
-    for i in range(9):
-        check=1
-        for i in range(9):
-            record=0
-            store=0
-            place1=0
-            for i in range(9):
-                if check in (main[place1])[place2]:
-                    record+=1
-                else:
-                    store=place1
-                place1+=1
-
-
-            count=1
-            if record==8:
-                for i in range(9):
-                    if count not in (main[store])[place2] and count != check:
-                        (main[store])[place2].append(count)
-                    count+=1
-
-            check+=1
-        place2+=1
-    #End the columns not in times 8
-
-
-
-    #This is the: 3 by 3 - not in times 8, then add all but that one as not numbers
-    start_coords=[[0,0],[0,3],[0,6],[3,0],[3,3],[3,6],[6,0],[6,3],[6,6]]
+    '''
+    # putting the solution into main if any of the rows can't have a number anywhere but one space
+    '''
+    for sub_row in range(9):
         
-    location=0
-    for i in range(9):
-        check=1
-        for i in range(9):
-            record=0
-            store=[]
-            
-            place1=(start_coords[location])[0]
-            place2=(start_coords[location])[1]
+        for number in range(1, 10):
+            num_of_appearances = 0
+
+            for sub_column in range(9):
+                if number in main[sub_row][sub_column]:
+                    num_of_appearances += 1
+                else: # if 'number' is not in the space then this space is where the 'number' is the solution for (as long as num_of_appearances == 8)
+                    solution_column = sub_column
 
 
-            for i in range(3):
-                for i in range(3):
-                    if check in (main[place1])[place2]:
-                        record+=1
+            if num_of_appearances == 8: # if this is true then the row we are in has enough information to output the solution to a space in this row corresponding to
+                    # solution_column
+                for one_to_nine in range(1, 10):
+                    if one_to_nine not in main[sub_row][solution_column] and one_to_nine != number: # the space which 'number' is a solution to needs to have all the
+                            # the numbers from 1 through 9 in it apart from 'number'
+                        main[sub_row][solution_column].append(one_to_nine)
+
+
+    '''
+    # putting the solution into main if any of the columns can't have a number anywhere but one space
+    '''
+    for sub_column in range(9):
+        
+        for number in range(1, 10):
+            num_of_appearances = 0
+
+            for sub_row in range(9):
+                if number in main[sub_row][sub_column]:
+                    num_of_appearances += 1
+                else: # if 'number' is not in the space then this space is where the 'number' is the solution for (as long as num_of_appearances == 8)
+                    solution_row = sub_row
+
+
+            if num_of_appearances == 8: # if this is true then the column we are in has enough information to output the solution to a space in this column
+                    # corresponding to solution_row
+                for one_to_nine in range(1, 10):
+                    if one_to_nine not in main[solution_row][sub_column] and one_to_nine != number: # the space which 'number' is a solution to needs to have all the
+                            # the numbers from 1 through 9 in it apart from 'number'
+                        main[solution_row][sub_column].append(one_to_nine)
+
+
+    '''
+    # putting the solution into main if any of the '3 by 3 boxes' can't have a number anywhere but one space
+    '''
+    start_coords=[[0,0],[0,3],[0,6],[3,0],[3,3],[3,6],[6,0],[6,3],[6,6]]
+    
+    for start_location in start_coords:
+        for number in range(1, 10):
+            num_of_appearances = 0
+
+            row_start = start_location[0]
+            column_start = start_location[1]
+
+
+            for sub_row in range(row_start, row_start + 3):
+                for sub_column in range(column_start, column_start + 3):
+                    if number in main[sub_row][sub_column]:
+                        num_of_appearances += 1
                     else:
-                        store=[place1,place2]
-                    place2+=1
-                place2=(start_coords[location])[1]
-                place1+=1
+                        solution_location = [sub_row, sub_column]
 
                 
+            if num_of_appearances == 8:        
+                for one_to_nine in range(1, 10):
+                    if one_to_nine not in main[solution_location[0]][solution_location[1]] and one_to_nine != number:
+                        main[solution_location[0]][solution_location[1]].append(one_to_nine)
 
-            count=1
-            if record==8:        
-                for i in range(9):
-                    if count not in (main[store[0]])[store[1]] and count != check:
-                        (main[store[0]])[store[1]].append(count)
-                    count+=1
 
-            check+=1
-        location+=1
-
-    #End the 3 by 3 not in times 8
-
-    
-
-    #Printing not_to_actual and the length of it
+    # Calling the not_to_actual function
     not_to_actual()
 
     #Printing main and the length of it
-    print('\n\nmain:\n')
-    for i in main:
-        print(i,'\n')
+##    print('\n\nmain:\n')
+##    for i in main:
+##        print(i,'\n')
 
     count=0
     for i in main:
         for j in i:
             count+=len(j)
 
-    print('\nLength of main:',count)
+    print('\nNumber of numbers solved:',count)
     complete2=count
 
 
