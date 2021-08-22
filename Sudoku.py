@@ -1,4 +1,6 @@
 
+# This code was verified by the first puzzle and its solution on this pdf: https://www.mathsphere.co.uk/downloads/sudoku/10204-fiendish.pdf
+
 # function to output name of variable and what the variable is
 def pri(var_name, str_var_name):
     
@@ -8,17 +10,17 @@ def pri(var_name, str_var_name):
 
 # the initial numbers that we start with
 puzzleIn=[
-    [[],[],[],  [1],[],[],  [],[],[]],
-    [[],[],[2],  [],[9],[6],  [],[],[]],
-    [[],[8],[5],  [],[],[3],  [],[],[]],
+    [[9],[5],[],  [],[],[1],  [],[],[2]],
+    [[6],[3],[],  [],[],[],  [1],[],[]],
+    [[],[],[8],  [],[6],[],  [],[],[7]],
 
-    [[],[],[],  [],[],[],  [7],[3],[]],
-    [[5],[7],[1],  [3],[],[],  [],[4],[]],
-    [[],[6],[3],  [],[8],[],  [],[],[1]],
+    [[],[],[],  [],[],[],  [5],[],[]],
+    [[],[6],[1],  [7],[],[9],  [],[],[]],
+    [[],[],[2],  [],[4],[],  [],[],[8]],
 
-    [[1],[],[],  [9],[3],[],  [4],[6],[]],
-    [[2],[],[],  [8],[5],[],  [1],[],[]],
-    [[],[9],[8],  [],[1],[],  [],[],[]]
+    [[],[9],[],  [],[],[],  [],[],[5]],
+    [[],[1],[],  [],[5],[6],  [4],[8],[]],
+    [[],[8],[],  [],[1],[7],  [],[],[6]]
     ]
 
 # main will be populated with numbers that are not the solution (like the inverse of PuzzleIn)
@@ -221,7 +223,6 @@ while 1:
         for j in i:
             count+=len(j)
 
-    print('\nNumber of numbers in main:',count)
     complete2=count
     
 
@@ -231,6 +232,8 @@ while 1:
     else: # if a change to main was made in the code above then output the current state of the puzzle
         # Calling the not_to_actual function
         not_to_actual()
+
+        print('\nNumber of numbers in main:',count)
 
 ############################################
 
