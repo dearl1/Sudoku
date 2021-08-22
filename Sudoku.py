@@ -37,13 +37,6 @@ main=[
     ]
 
 
-# outputting each row of main
-##print("\n\n Outputting each row of main ...\n")
-##for row in main:
-##    print(row)
-##    print()
-
-
 # make main be the inverse of PuzzleIn
 for row in range(9):
     for column in range(9):
@@ -51,13 +44,6 @@ for row in range(9):
             for number in range(1, 10):
                 if number not in (puzzleIn[row])[column]:
                     (main[row])[column].append(number)
-
-
-# outputting each row of main
-##print("\n\n Outputting each row of main ...\n")
-##for row in main:
-##    print(row)
-##    print()
 
 
 # this function goes through the 81 elements in main and checks if the length of each of the 81 places is 8 (that is, number exists)
@@ -106,27 +92,10 @@ def get_coords(place):
     return use
 
 
-# Calling not_to_actual function
-##not_to_actual()
-
-
-###Printing main and the length of it
-##print('\n\nmain:\n')
-##for i in main:
-##    print(i,'\n')
-##
-##count=0
-##for i in main:
-##    for j in i:
-##        count+=len(j)
-##
-##print('\nLength of main:',count)
-
-
 complete1=0
-complete2=1
+complete2=0
 # main code
-while complete1 != complete2: # if the number of solutions doesn't increase then the code stops
+while 1:
     complete1=complete2
 
     print('\n*******************************************************************************\n')
@@ -140,7 +109,7 @@ while complete1 != complete2: # if the number of solutions doesn't increase then
 
             if len((main[row])[column])==8: # if this is true then we have found the solution for this space
                 for number in range(1, 10):
-                    if number not in (main[get1])[get2]: # if this is true then 'number' is the solution for this space
+                    if number not in (main[row])[column]: # if this is true then 'number' is the solution for this space
 
                         # Make all the spaces in the same column as the current location have 'number' added to them (if 'number' doesn't already exist)
                         for sub_row in range(9): # sub_row will go from 0 through 8
@@ -246,24 +215,22 @@ while complete1 != complete2: # if the number of solutions doesn't increase then
                         main[solution_location[0]][solution_location[1]].append(one_to_nine)
 
 
-    # Calling the not_to_actual function
-    not_to_actual()
-
-    #Printing main and the length of it
-##    print('\n\nmain:\n')
-##    for i in main:
-##        print(i,'\n')
-
+    # find how many numbers there are in main
     count=0
     for i in main:
         for j in i:
             count+=len(j)
 
-    print('\nNumber of numbers solved:',count)
+    print('\nNumber of numbers in main:',count)
     complete2=count
+    
 
-
-
+    if complete2 == complete1:
+        break # if the number of numbers in main doesn't increase then the code stops
+    
+    else: # if a change to main was made in the code above then output the current state of the puzzle
+        # Calling the not_to_actual function
+        not_to_actual()
 
 ############################################
 
@@ -278,25 +245,3 @@ while complete1 != complete2: # if the number of solutions doesn't increase then
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-'''
