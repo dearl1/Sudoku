@@ -1,4 +1,12 @@
-#Get numbers
+
+# function to output name of variable and what the variable is
+def pri(var_name, str_var_name):
+    
+    print(f"\n\n   {str_var_name} ...")
+    print(var_name)
+
+
+# the initial numbers that we start with
 puzzleIn=[
     [[],[],[],  [1],[],[],  [],[],[]],
     [[],[],[2],  [],[9],[6],  [],[],[]],
@@ -13,7 +21,7 @@ puzzleIn=[
     [[],[9],[8],  [],[1],[],  [],[],[]]
     ]
 
-#Transfer to not numbers
+# main will be populated with numbers that are not the solution (like the inverse of PuzzleIn)
 main=[
     [[],[],[],  [],[],[],  [],[],[]],
     [[],[],[],  [],[],[],  [],[],[]],
@@ -28,23 +36,31 @@ main=[
     [[],[],[],  [],[],[],  [],[],[]]
     ]
 
-#This is the code that actually does it
-get1=0
-get2=0
-for i in range(9):
-    for i in range(9):
-        count=1
-        if len((puzzleIn[get1])[get2])==1:
-            for i in range(9):
-                if count not in (puzzleIn[get1])[get2]:
-                    (main[get1])[get2].append(count)
-                count+=1
-        get2+=1
-    get1+=1
-    get2=0
+
+# outputting each row of main
+print("\n\n Outputting each row of main ...\n")
+for row in main:
+    print(row)
+    print()
 
 
+# make main be the inverse of PuzzleIn
+for row in range(9):
+    for column in range(9):
+        if len((puzzleIn[row])[column]) == 1:
+            for number in range(1, 10):
+                if number not in (puzzleIn[row])[column]:
+                    (main[row])[column].append(number)
 
+
+# outputting each row of main
+print("\n\n Outputting each row of main ...\n")
+for row in main:
+    print(row)
+    print()
+
+
+'''
 
 def not_to_actual():
     print('\n\nnot_to_actual:\n')
@@ -323,3 +339,4 @@ while complete1 != complete2:
 
 
 
+'''
